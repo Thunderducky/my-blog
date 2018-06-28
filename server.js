@@ -1,9 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-
+const mongoose = require("mongoose");
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+const blogPosts = [];
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -18,10 +20,10 @@ app.get("/", (req, res) => {
 app.get("/api/test", (req, res) => {
   res.json(true);
 });
-app.post("/api/test", (req, res) => {
+app.post("/api/blog", (req, res) => {
   console.log(req.body);
-  req.body.received = true;
-  res.json(req.body);
+  blogPosts.push(req.body);
+  res.json(blogPosts);
 })
 
 // This is a catch all if no other routes are matched
