@@ -3,6 +3,8 @@ import axios from "axios";
 import logo from './logo.svg';
 import './App.css';
 
+import ViewBlog from './pages/ViewBlog';
+
 class App extends Component {
   state = {
     title: "",
@@ -35,7 +37,9 @@ class App extends Component {
           <textarea name="body" onChange={this.handleInputChange} value={this.state.body} />
           <button onClick={this.postBlog}>Submit</button>
         </form>
+        <ViewBlog />
       </div>
+
     );
   }
 }

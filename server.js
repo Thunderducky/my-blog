@@ -20,8 +20,23 @@ app.get("/", (req, res) => {
   res.send("hi");
 });
 
-app.get("/api/test", (req, res) => {
-  res.json(true);
+app.get("/api/blog", (req, res) => {
+  console.log("this should be hit");
+  Blog.find({}).then(results => res.json(results));
+//   res.json(
+//     [
+//       {
+//         id: 1,
+//         title: "blog1",
+//         body: "this is my blog now"
+//       },
+//       {
+//         id: 2,
+//         title: "blog2",
+//         body: "this is also my blog now"
+//       }
+//     ]
+//   )
 });
 app.post("/api/blog", (req, res) => {
   console.log(req.body);
