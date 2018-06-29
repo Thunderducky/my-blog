@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 class ViewBlog extends Component {
@@ -29,6 +30,7 @@ class ViewBlog extends Component {
   render(){
     return (
       <div>
+        <Link to="/edit">New Blog Post</Link>
         { /* Map each of our posts */
           this.state.blogs.map( post => (
             <div key={post.id}>
