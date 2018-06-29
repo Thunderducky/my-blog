@@ -5,11 +5,11 @@ import axios from "axios";
 class ViewBlog extends Component {
   state = {
     blogs: [{
-      id: 1,
+      _id: 1,
       title: "This is a test",
       body: "Or is it????"
     }, {
-      id: 2,
+      _id: 2,
       title: "This is a test",
       body: "Or is it????"
     }]
@@ -33,7 +33,7 @@ class ViewBlog extends Component {
         <Link to="/edit">New Blog Post</Link>
         { /* Map each of our posts */
           this.state.blogs.map( post => (
-            <div key={post.id}>
+            <div key={post._id}>
               <h1>{post.title}</h1>
               <h3>Created at: {post.createdAt}</h3>
               <p>{ post.body}</p>

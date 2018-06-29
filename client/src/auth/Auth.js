@@ -1,11 +1,12 @@
 import auth0 from 'auth0-js';
 import history from "../history"
 
+const origin = window.location.origin;
 export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: 'coding-class.auth0.com',
     clientID: '9rQcd8ACuWllwprd3Vg5GtgzlPgcuCVn',
-    redirectUri: 'http://localhost:3000/callback',
+    redirectUri: origin + '/callback',
     audience: 'https://coding-class.auth0.com/userinfo',
     responseType: 'token id_token',
     scope: 'openid'
