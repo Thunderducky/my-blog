@@ -9,7 +9,6 @@ import history from "./history"
 import ViewBlog from './pages/ViewBlog';
 import EditBlog from './pages/EditBlog';
 import Callback from './pages/Callback';
-import Profile from './pages/Profile';
 const auth = new Auth();
 
 const handleAuthentication = (nextState, replace) => {
@@ -44,7 +43,7 @@ class App extends Component {
           <Route exact path="/edit" component={EditBlog} /> */}
           <Route exact path="/" render={(props) => <ViewBlog auth={auth} {...props} />} />
           <Route path="/edit" render={(props) => <EditBlog auth={auth} {...props} />} />
-          <Route path="/profile" render={(props) => <Profile auth={auth} {...props} />} />
+
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
             return <Callback {...props} />

@@ -31,7 +31,6 @@ class ViewBlog extends Component {
     return (
       <div>
         <Link to="/edit">New Blog Post</Link>
-        <Link to="/profile">Profile</Link>
         { /* Map each of our posts */
           this.state.blogs.map( post => (
             <div key={post._id}>

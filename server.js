@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 app.get("/api/blog", (req, res) => {
   console.log("this should be hit");
-  Blog.find({}).sort({createdAt: -1}).then(results => res.json(results));
+  Blog.find({}).then(results => res.json(results));
 //   res.json(
 //     [
 //       {
