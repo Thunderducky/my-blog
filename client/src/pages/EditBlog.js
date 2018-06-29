@@ -1,6 +1,8 @@
 import React from "react"
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import axios from "axios"
+import Auth from '../auth/Auth.js';
+
 class EditBlog extends React.Component {
   state = {
     title: "",
@@ -17,6 +19,7 @@ class EditBlog extends React.Component {
     axios.post("/api/blog", {title, body}).then(res => {
       console.log(res);
       this.setState({ title: "", body: ""});
+      this.props.history.push("/");
     })
   }
 render(){
@@ -34,4 +37,4 @@ render(){
 
 }
 
-export default EditBlog;
+export default withRouter(EditBlog);

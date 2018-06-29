@@ -35,6 +35,7 @@ class ViewBlog extends Component {
           this.state.blogs.map( post => (
             <div key={post.id}>
               <h1>{post.title}</h1>
+              <h3>Created at: {post.createdAt}</h3>
               <p>{ post.body}</p>
             </div>
           ))
