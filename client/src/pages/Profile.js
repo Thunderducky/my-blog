@@ -20,6 +20,7 @@ class Profile extends Component {
       <div>
         <Link to="/">Home</Link>
         <div>
+          THIS WAS ALL A HUGE MISTAKE
           <img src={profile.picture}/><span>{profile.name}</span>
         </div>
       </div>
