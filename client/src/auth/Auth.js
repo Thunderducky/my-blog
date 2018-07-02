@@ -3,13 +3,16 @@ import history from "../history"
 
 const origin = window.location.origin;
 export default class Auth {
+  requestedScopes = 'openid profile read:blog write:blog'
+
   auth0 = new auth0.WebAuth({
     domain: 'coding-class.auth0.com',
     clientID: '9rQcd8ACuWllwprd3Vg5GtgzlPgcuCVn',
     redirectUri: origin + '/callback',
-    audience: 'https://coding-class.auth0.com/userinfo',
+    audience: 'my-blog',
+    //audience: 'https://coding-class.auth0.com/userinfo',
     responseType: 'token id_token',
-    scope: 'openid profile'
+    scope: this.requestedScopes
   });
   userProfile;
 
@@ -27,6 +30,12 @@ export default class Auth {
      throw new Error('No Access Token found');
    }
    return accessToken;
+ }
+
+ userHasScopes(scopes){
+   let _scopes = JSON.parse(localStorage.getItem("scopes")) || " ";
+   console.log(_scopes);
+   const grantedScopes = _scopes.split(' ');
  }
 
  getProfile(cb) {
@@ -56,6 +65,10 @@ export default class Auth {
    localStorage.setItem('access_token', authResult.accessToken);
    localStorage.setItem('id_token', authResult.idToken);
    localStorage.setItem('expires_at', expiresAt);
+
+   const scopes = authResult.scope || this.requestedScopes || "";
+   localStorage.setItem("scopes", JSON.stringify(scopes));
+
    // navigate to the home route
    history.replace('/home');
  }
@@ -69,6 +82,7 @@ export default class Auth {
    localStorage.removeItem('access_token');
    localStorage.removeItem('id_token');
    localStorage.removeItem('expires_at');
+   localStorage.removeItem('scopes');
    // navigate to the home route
    history.replace('/');
  }

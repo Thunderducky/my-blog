@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import Auth from "./auth/Auth.js"
 import './App.css';
 
-import { Router, Route } from "react-router-dom";
+import { Router, Route, Redirect } from "react-router-dom";
 import history from "./history"
 import ViewBlog from './pages/ViewBlog';
 import EditBlog from './pages/EditBlog';
@@ -43,7 +43,18 @@ class App extends Component {
           {/* <Route exact path="/" component={ViewBlog} />
           <Route exact path="/edit" component={EditBlog} /> */}
           <Route exact path="/" render={(props) => <ViewBlog auth={auth} {...props} />} />
-          <Route path="/edit" render={(props) => <EditBlog auth={auth} {...props} />} />
+          <Route path="/edit" render={(props) => {
+            // const isAllowed = auth.isAuthenticated()
+            //                && auth.userHasScopes(['write:blog']);
+            // return isAllowed ?
+            //   (
+            return <EditBlog auth={auth} {...props} />
+            //   )
+            // :
+            //   (
+            //     <Redirect to="/" />
+            //   )
+          } } />
           <Route path="/profile" render={(props) => <Profile auth={auth} {...props} />} />
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);

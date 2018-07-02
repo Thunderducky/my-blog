@@ -2,12 +2,44 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const mongoose = require("mongoose");
-const app = express();
-const PORT = process.env.PORT || 3001;
+const dotenv = require("dotenv");
+
+// Auth related frameworks
+const jwt = require("express-jwt");
+const jwtAuthz = require("express-jwt-authz");
+const jwksRsa = require("jwks-rsa");
+const cors = require('cors');
 
 const Blog = require("./models/blog");
 
+dotenv.config()
 
+if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
+  throw 'Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE configured';
+}
+
+const checkJwt = jwt({
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+  }),
+  audience: 'my-blog',
+  issuer:`${process.env.AUTH0_DOMAIN}/`,
+  algorithms: ['RS256']
+});
+
+const checkWriteBlog = jwtAuthz(['write:blog' ]);
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+const corsOptions =  {
+  origin: 'http://localhost:3000'
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -23,22 +55,8 @@ app.get("/", (req, res) => {
 app.get("/api/blog", (req, res) => {
   console.log("this should be hit");
   Blog.find({}).sort({createdAt: -1}).then(results => res.json(results));
-//   res.json(
-//     [
-//       {
-//         id: 1,
-//         title: "blog1",
-//         body: "this is my blog now"
-//       },
-//       {
-//         id: 2,
-//         title: "blog2",
-//         body: "this is also my blog now"
-//       }
-//     ]
-//   )
 });
-app.post("/api/blog", (req, res) => {
+app.post("/api/blog", checkJwt, checkWriteBlog, (req, res) => {
   console.log(req.body);
 
   Blog.create(req.body).then(dbBlog => {
