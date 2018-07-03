@@ -36,6 +36,7 @@ export default class Auth {
    let _scopes = JSON.parse(localStorage.getItem("scopes")) || " ";
    console.log(_scopes);
    const grantedScopes = _scopes.split(' ');
+   return scopes.every(scope => grantedScopes.includes(scope));
  }
 
  getProfile(cb) {
@@ -47,7 +48,7 @@ export default class Auth {
       cb(err, profile);
     });
   }
- handleAuthentication() {
+ handleAuthentication(){
    this.auth0.parseHash((err, authResult) => {
      if (authResult && authResult.accessToken && authResult.idToken) {
        this.setSession(authResult);
@@ -70,7 +71,7 @@ export default class Auth {
    localStorage.setItem("scopes", JSON.stringify(scopes));
 
    // navigate to the home route
-   history.replace('/home');
+   history.replace('/');
  }
 
  login() {
