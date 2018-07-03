@@ -18,7 +18,6 @@ class Profile extends Component {
     const { profile } = this.state;
     return (
       <div>
-        <Link to="/">Home</Link>
         <div>
           <img src={profile.picture}/><span>{profile.name}</span>
         </div>

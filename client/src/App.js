@@ -8,6 +8,7 @@ import { Router, Route, Redirect } from "react-router-dom";
 import history from "./history"
 
 import Nav from './Nav';
+import Footer from './Footer';
 import ViewBlog from './pages/ViewBlog';
 import EditBlog from './pages/EditBlog';
 import Callback from './pages/Callback';
@@ -19,39 +20,40 @@ class App extends Component {
     return (
       <Router history={history}>
         <div>
-          <div>
-            <Nav auth={auth} />
-          </div>
-          <Route exact path="/" render={
-            (props) => {
-              return (<ViewBlog auth={auth} {...props}/>);
-            }
-          }/>
-          <Route exact path="/edit" render={
-            (props) => {
-              return (auth.isAuthenticated() && auth.userHasScopes(["write:blog"])) ? (
-                <EditBlog auth={auth} {...props}/>
-              ) : (
-                <Redirect to="/"/>
-              )
-            }
-          }/>
-          <Route exact path="/profile" render={
-            (props) => {
-              return (auth.isAuthenticated()) ? (
-                <Profile auth={auth} {...props}/>
-              ) : (
-                <Redirect to="/"/>
-              )
+          <Nav auth={auth} />
+          <div className="main-view">
+            <Route exact path="/" render={
+              (props) => {
+                return (<ViewBlog auth={auth} {...props}/>);
+              }
+            }/>
+            <Route exact path="/edit" render={
+              (props) => {
+                return (auth.isAuthenticated() && auth.userHasScopes(["write:blog"])) ? (
+                  <EditBlog auth={auth} {...props}/>
+                ) : (
+                  <Redirect to="/"/>
+                )
+              }
+            }/>
+            <Route exact path="/profile" render={
+              (props) => {
+                return (auth.isAuthenticated()) ? (
+                  <Profile auth={auth} {...props}/>
+                ) : (
+                  <Redirect to="/"/>
+                )
 
-            }
-          }/>
-          <Route path="/callback" render={
-            (props) => {
-              auth.handleAuthentication(props);
-              return <Callback {...props} />
-            }
-          }/>
+              }
+            }/>
+            <Route path="/callback" render={
+              (props) => {
+                auth.handleAuthentication(props);
+                return <Callback {...props} />
+              }
+            }/>
+          </div>
+          <Footer />
         </div>
       </Router>
 

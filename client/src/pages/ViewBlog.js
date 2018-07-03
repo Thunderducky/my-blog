@@ -32,9 +32,9 @@ class ViewBlog extends Component {
       <div>
         { /* Map each of our posts */
           this.state.blogs.map( post => (
-            <div key={post._id}>
+            <div key={post._id} className="blog-post">
               <h1>{post.title}</h1>
-              <h3>Created at: {post.createdAt}</h3>
+              <h6>Created at: {post.createdAt}</h6>
               <p>{ post.body}</p>
             </div>
           ))
