@@ -15,8 +15,10 @@ class EditBlog extends React.Component {
   }
   postBlog = event => {
     event.preventDefault();
+    const { getAccessToken } = this.props.auth;
+    const headers = { 'authorization': `Bearer ${getAccessToken()}`}
     const { title, body} = this.state;
-    axios.post("/api/blog", {title, body}).then(res => {
+    axios.post("/api/blog", {title, body}, {crossDomain: true, withCredentials:true, headers}).then(res => {
       console.log(res);
       this.setState({ title: "", body: ""});
       this.props.history.push("/");
