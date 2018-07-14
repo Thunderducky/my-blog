@@ -4,15 +4,7 @@ import axios from "axios";
 
 class ViewBlog extends Component {
   state = {
-    blogs: [{
-      _id: 1,
-      title: "This is a test",
-      body: "Or is it????"
-    }, {
-      _id: 2,
-      title: "This is a test",
-      body: "Or is it????"
-    }]
+    blogs: []
   };
 
   refreshBlogs(){
@@ -34,7 +26,7 @@ class ViewBlog extends Component {
           this.state.blogs.map( post => (
             <div key={post._id} className="blog-post">
               <h1>{post.title}</h1>
-              <h6>Created at: {post.createdAt}</h6>
+              <h6>Created at: {post.createdAt} by {post.Author.nickname}</h6>
               <p>{ post.body}</p>
             </div>
           ))

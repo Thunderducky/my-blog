@@ -1,12 +1,11 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+module.exports = function(sequelize, DataType){
+  const Blog = sequelize.define("Blog", {
+    title: DataType.STRING,
+    body: DataType.TEXT
+  });
 
-const BlogSchema = new Schema({
-  title: String,
-  body: String
-}, {
-  timestamps: true
-});
-
-const Blog = mongoose.model("Blog", BlogSchema)
-module.exports = Blog;
+  Blog.associate = function(models){
+    Blog.belongsTo(models.Author);
+  };
+  return Blog;
+}

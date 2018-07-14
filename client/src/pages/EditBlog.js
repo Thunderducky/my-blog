@@ -27,9 +27,13 @@ class EditBlog extends React.Component {
 render(){
   return (
     <div>
-      <form>
-        <input name="title" onChange={this.handleInputChange}  value={this.title} />
-        <textarea name="body" onChange={this.handleInputChange} value={this.body} />
+      <form className="blog-form">
+        <div className="form-title">
+          <input name="title" onChange={this.handleInputChange} placeholder="The Tale of ..."  value={this.title} />
+        </div>
+        <div className="form-body">
+          <textarea name="body" onChange={this.handleInputChange} placeholder="It all began when ..." value={this.body} />
+        </div>
         <button onClick={this.postBlog}>Submit</button>
       </form>
     </div>
